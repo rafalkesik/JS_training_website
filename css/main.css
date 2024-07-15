@@ -1,0 +1,25 @@
+/* GLOBAL STYLES */
+body {
+
+}
+
+/* CONTENT STYLES */
+.content {
+    margin: 1vw 5vw 1vw;
+}
+
+/* HEADER STYLES */
+.header {
+    display: block;
+    background-color: aquamarine;
+}
+
+.logo {
+    float: left
+}
+
+.nav-links li {;
+    list-style-type: none;
+    font-weight: bold;
+    
+}
