@@ -1,25 +1,106 @@
 /* GLOBAL STYLES */
-body {
+    body {
+        color: black;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
 
-}
+
+/* GRID STYLES */
+    .grid {
+        display: grid;
+        box-sizing: border-box;
+        grid-template-columns: 10vh repeat(6, 1fr) 10vh;
+        grid-template-rows: 10vh;
+        /* align-items: center;
+        justify-items: center; */
+    }
+    .grid_2-8 {
+        grid-column: 2 / 8;
+    }
+    .grid_1-2 {
+        grid-column: 1 / 2;
+    }
+    .grid_3-7 {
+        grid-column: 3/7;
+    }
+    .grid_4-6 {
+        grid-column: 4 / 6;
+    }
 
 /* CONTENT STYLES */
-.content {
-    margin: 1vw 5vw 1vw;
-}
+    .content-container {
+        flex: 1 1 auto;
+        padding: 2vh 4vw;
+    }
 
 /* HEADER STYLES */
-.header {
-    display: block;
-    background-color: aquamarine;
-}
+    .header {
+        color: white;
+        position: sticky;
+        background-color: black;
+        z-index: 20;
+        top: 0;
+        text-align: center;
+        align-items: center;
+        min-height: 15px;
+    }
 
-.logo {
-    float: left
-}
+    .logo-header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        
+    }
+    .logo-header > a > img {
+        height: 10vh;
+        width: auto;
+    }
 
-.nav-links li {;
-    list-style-type: none;
-    font-weight: bold;
-    
-}
+    .logo-footer > a > img {
+        height: 30vh;
+        width: auto;
+    }
+
+    .header > nav {
+
+    }
+    .footer > nav {
+
+    }
+
+    .nav-links {
+        display: block;
+    }
+    .nav-links > li {
+        display: inline-block; 
+        list-style-type: none;
+        font-weight: bold;
+    }
+    .nav-links li ~ li {
+        border-left: 1px solid rgba(97, 97, 97, 0.7);
+        padding-left: 1em;
+        margin-left: 1em;
+    }
+    .nav-links > li > a:hover {
+        color: #EB8C65
+    }
+
+/* FOOTER STYLES */
+
+    .footer {
+        color: white;
+        background-color: black;
+        padding: 3vh 2vw;
+        justify-items: center;
+        row-gap: 5vh;
+        grid-template-rows: 30vh;
+    }
+    .footer .nav-links li ~ li {
+        border-left: none;
+    }
