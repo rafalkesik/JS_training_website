@@ -9,6 +9,18 @@
         color: white;
         text-decoration: none;
     }
+    h1 {
+        font-size: 2em;
+        font-weight: bold;
+    }
+    h2 {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    h3 {
+        font-size: 1em;
+        font-weight: bold;
+    }
 
 
 /* GRID STYLES */
@@ -17,8 +29,6 @@
         box-sizing: border-box;
         grid-template-columns: 10vh repeat(6, 1fr) 10vh;
         grid-template-rows: 10vh;
-        /* align-items: center;
-        justify-items: center; */
     }
     .grid_2-8 {
         grid-column: 2 / 8;
@@ -57,15 +67,19 @@
         top: 0;
         
     }
-    .logo-header > a > img {
+    /* .logo-header > a > img {
         height: 10vh;
         width: auto;
-    }
-
-    .logo-footer > a > img {
-        height: 30vh;
-        width: auto;
-    }
+        
+    } */
+     .logo-header > img {
+        height: 10vh;
+        width: 10vh;
+     }
+     .logo-header {
+        height: 10vh;
+        width: 10vh;
+     }
 
     .header > nav {
 
@@ -83,12 +97,12 @@
         font-weight: bold;
     }
     .nav-links li ~ li {
-        border-left: 1px solid rgba(97, 97, 97, 0.7);
+        border-left: 2px solid rgba(97, 97, 97, 0.7);
         padding-left: 1em;
         margin-left: 1em;
     }
     .nav-links > li > a:hover {
-        color: #EB8C65
+        color: lightsalmon;
     }
 
 /* FOOTER STYLES */
@@ -100,7 +114,41 @@
         justify-items: center;
         row-gap: 5vh;
         grid-template-rows: 30vh;
+        text-align: center;
     }
     .footer .nav-links li ~ li {
         border-left: none;
     }
+
+    /* .logo-footer > a > img {
+        height: 30vh;
+        width: auto;
+    } */
+    .logo-footer > img {
+        height: 30vh;
+        width: 30vh;
+    }
+    .logo-footer {
+        height: 30vh;
+        width: 30vh;
+    }
+
+    .footer p {
+        /* make font smaller & light-grey */
+        font-size: 0.7em;
+        color: lightslategrey;
+    }
+    .footer p a {
+        /* make the link highlighted with color like yellow or purple */
+        color: lightsalmon;
+        line-height: 1.5em;
+    }
+    .footer p a:hover {
+        color: white;
+    }
+    
+/* LOGO STYLES */
+    .logo:hover {
+        background-color: lightsalmon;
+    }
+    
