@@ -1,16 +1,11 @@
 <header class="header grid">
-    
-    <!-- <div class="logo logo-header">
-        <a href="index.html">
-            <img src="images/logo.png" alt="Website logo">
-        </a>
-    </div> -->
 
-    <a href="index.html" class="logo logo-header">
+    <!-- Adds a logo -->
+    <a href="index.html" class="logo-header">
         <img src="images/logo.png" alt="Website logo">
     </a>
 
-
+    <!-- Adds navigation bar -->
     <nav class="grid_2-8">
         <ul class="nav-links">
             <li><a href="index.html">Main Page</a></li>
@@ -20,4 +15,11 @@
         </ul>
     </nav>
 
+    <!-- Adds a menu bar for mobile view -->
+
+     <!-- For now it only runs a dummy function. -->
+    <label for="menu-bar-visible" class="grid_8-9 menu-button">
+        <i class="fa-solid fa-bars fa-2xl"></i>
+    </label>
+    <input type="checkbox" style="display: none;" id="menu-bar-visible" onclick="menuBarChangeVisibility()">
 </header>
