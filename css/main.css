@@ -67,11 +67,6 @@
         top: 0;
         
     }
-    /* .logo-header > a > img {
-        height: 10vh;
-        width: auto;
-        
-    } */
      .logo-header > img {
         height: 10vh;
         width: 10vh;
@@ -120,10 +115,6 @@
         border-left: none;
     }
 
-    /* .logo-footer > a > img {
-        height: 30vh;
-        width: auto;
-    } */
     .logo-footer > img {
         height: 30vh;
         width: 30vh;
@@ -134,12 +125,10 @@
     }
 
     .footer p {
-        /* make font smaller & light-grey */
         font-size: 0.7em;
         color: lightslategrey;
     }
     .footer p a {
-        /* make the link highlighted with color like yellow or purple */
         color: lightsalmon;
         line-height: 1.5em;
     }
