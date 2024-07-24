@@ -47,6 +47,9 @@
     .grid_4-6 {
         grid-column: 4 / 6;
     }
+    .drid_1-8 {
+        grid-column: 1 / 8;
+    }
 
 /* CONTENT STYLES */
     .content-container {
@@ -67,31 +70,39 @@
         text-align: center;
         align-items: center;
         justify-items: center;
-        min-height: 25px;
+        min-height: 40px;
     }
 
     .header.grid {
-        grid-template-columns: 10vh repeat(6, 1fr) 10vh;
+        grid-template-columns: minmax(40px, 10vh) repeat(6, 1fr) minmax(40px, 10vh);
     }
 
     .logo-header, .logo-header > img {
         height: 10vh;
         width: 10vh;
-        min-height: 25px;
-        min-width: 25px;
+        min-height: 40px;
+        min-width: 40px;
      }
 
 /* DROPDOWN MENU STYLES */
      .menu-button {
         height: 10vh;
         width: 10vh;
-        min-height: 25px;
-        min-width: 25px;
+        min-height: 40px;
+        min-width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        display: none
+        display: none;
     }
+    .drop-down-menu {
+        display: none;
+    }
+
+    .highlight_text {
+        color: lightsalmon;
+    }
+
 
 
 /* NAV LINKS STYLES */
@@ -146,10 +157,10 @@
 
 /* RESPONSIVE DESIGN STYLES */
     @media (max-width: 600px) {
-        .nav-links {
+        .footer .nav-links {
             font-size: 3.25vw;
         }        
-        .nav-links li ~ li {
+        .footer .nav-links li ~ li {
             padding-left: 2vw;
             margin-left: 2vw;
         }
@@ -162,8 +173,80 @@
         .menu-button {
             display: flex;
         }
-        .header .nav-links {
-            display: none
+
+        /* .header .nav-links {*/
+        .nav-header {
+            position: fixed;
+            /* position: sticky; */
+            top: 10vh;
+            left: 0;
+            width: 100vw;
+            background-color: slategrey;
+            font-size: 2em;
+            line-height: 2em;
+            display: none;
         }
+        /* .header .nav-links li { */
+        .nav-header > li {
+            display: list-item;
+            height: 60px;
+            box-sizing: border-box;
+            font-weight: normal;
+        }
+        /* .header .nav-links li ~ li { */
+        .nav-header li ~ li {
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            padding-left: 0;
+            margin-left: 0;
+            border-left: none;
+        }
+        .nav-header li:first-child {
+            font-weight: bold;
+        }
+        .mobile-menu-check:checked ~ nav .nav-header {
+            display: block;
+        }
+
+ 
+        /* This part is under construction */
+        .drop-down-menu {
+            display: block;
+            position: fixed;
+            /* position: absolute; */
+            max-height: 0;
+            top: 10vh;
+            left: 0;
+            width: 100vw;
+            background-color: slategrey;
+            font-size: 2em;
+            line-height: 2em;
+            display: none;
+        }
+        .drop-down-menu li {
+            display: list-item;
+            height: 60px;
+            box-sizing: border-box;
+        }
+        .drop-down-menu li ~ li {
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        /* end */
         
+        @media (max-height: 400px) {
+            .header .nav-links {
+                top: 40px;
+            }
+            .drop-down-menu {
+                top: 40px;
+            }
+
+            .logo-header img {
+                height: 40px;
+                width: 40px;
+            }
+            .menu-button {
+                height: 40px;
+                width: 40px;
+            }
+        }
     }

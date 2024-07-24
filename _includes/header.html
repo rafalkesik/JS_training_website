@@ -1,25 +1,29 @@
 <header class="header grid">
+    <!-- Adds a checkbox to view or hide drop-down-menu -->
+    <input type="checkbox" style="display: none;" class="mobile-menu-check" id="menu-bar-visible" onclick="menuBarChangeVisibility()">
 
     <!-- Adds a logo -->
     <a href="index.html" class="logo-header">
         <img src="images/logo.png" alt="Website logo">
     </a>
-
+    
     <!-- Adds navigation bar -->
     <nav class="grid_2-8">
-        <ul class="nav-links">
-            <li><a href="index.html">Main Page</a></li>
-            <li><a href="/">To-do App</a></li>
-            <li><a href="/">Github-er</a></li>
-            <li><a href="/">Calculator</a></li>
+        <ul class="nav-links nav-header" id="header-nav-links">
+            {% include nav-links.html %}
         </ul>
     </nav>
+    
+    <!-- Adds drop-down-menu -->
+    <!-- <ul class="drop-down-menu" id="drop-down-menu" style="display:none">
+        {% include nav-links.html %}
+    </ul> -->
 
-    <!-- Adds a menu bar for mobile view -->
+    <!-- <p class="red">Hello world</p> -->
 
-     <!-- For now it only runs a dummy function. -->
+    <!-- Adds an icon showing or hiding drop-down-menu -->
     <label for="menu-bar-visible" class="grid_8-9 menu-button">
         <i class="fa-solid fa-bars fa-2xl"></i>
     </label>
-    <input type="checkbox" style="display: none;" id="menu-bar-visible" onclick="menuBarChangeVisibility()">
+    
 </header>
