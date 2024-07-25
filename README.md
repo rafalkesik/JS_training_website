@@ -10,10 +10,10 @@
 3. Make sure you have Jekyll installed, or install Jekyll using:
 <br><code>gem install jekyll bundler</code>;
 4. Go into the Repo;
-4. Build the project locally using: <code>bundle exec jekyll serve --baseurl ''</code>;
+4. Build the project locally using: <code>bundle exec jekyll serve</code>;
 5. View project in a browser using url: <code>localhost:4000</code>.
 ____________________________
-6. If you want to view the site locally on mobile, buid the project using: <code>bundle exec jekyll serve --baseurl '' --host: 0.0.0.0</code>. <br><br>To view the project on mobile, put your IP, followed by <code>:4000</code> in browser. (To view your IP, use this command in Terminal: <code>ifconfig en0 | grep "inet " | awk '{print $2}'</code>.)
+6. If you want to view the site locally on mobile, buid the project using: <code>bundle exec jekyll serve --host: 0.0.0.0</code>. <br><br>To view the project on mobile, put your IP, followed by <code>:4000</code> in browser. (To view your IP, use this command in Terminal: <code>ifconfig en0 | grep "inet " | awk '{print $2}'</code>.) ex. 190.166.0.0:4000
 
 <h3>Background</h3>
 
