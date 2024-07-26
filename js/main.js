@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 // Defines variable parsedArrayOfTasks
 function defineArray() {
     console.log(`Tasklist from local storage: ${window.localStorage.getItem("tasks")}`);
-    if (JSON.parse(window.localStorage.getItem("tasks")).length) {
+    if (!!window.localStorage.getItem("tasks")) {
         parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
     } else {
         parsedArrayOfTasks = [];
