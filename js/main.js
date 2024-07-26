@@ -30,7 +30,7 @@ function defineArray() {
 
 // Shows on page the list of tasks from local storage
 function printStartingList() {
-    if (JSON.parse(window.localStorage.getItem("tasks")).length) {
+    if (!!window.localStorage.getItem("tasks")) {
         parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
         listTasks(parsedArrayOfTasks);
         console.log("somthing in local storage");
