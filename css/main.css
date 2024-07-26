@@ -197,6 +197,9 @@ h3 {
     .mobile-menu-check:checked ~ nav .nav-header {
         display: block;
     }
+    .mobile-menu-check:checked ~ label {
+        color: lightsalmon;
+    }
     
     @media (max-height: 400px) {
         .header .nav-links {
