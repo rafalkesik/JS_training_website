@@ -2,17 +2,16 @@ let form, input, input_li, list, clearForm, parsedArrayOfTasks;
 
 document.addEventListener("DOMContentLoaded", function(event) {
     console.log("DOM loaded.")
-    console.log(document.title);
     if (document.title === "To-do-App | JS Training Site") {
         form = document.getElementById("addTaskForm")
         input = document.getElementById("addTask");
-        console.log(input);
         input_li = form.parentNode;
         list = document.getElementById("tasksList");
         clearForm = document.getElementById("clearTasksForm");
+        console.log("Adding event listeners on buttons...")  // TO BE DELETED
         form.addEventListener('submit', submitForm);
         clearForm.addEventListener('submit', clearTasks);
-        console.log("Event Listenery załozone na guziki")  // TO BE DELETED
+        console.log("DONE");
         defineArray();
         printStartingList();
     }
@@ -20,22 +19,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 // Defines variable parsedArrayOfTasks
 function defineArray() {
-    console.log(`Tasklist from local storage: ${window.localStorage.getItem("tasks")}`);
+    console.log(`Fetching tasks from local storage: ${window.localStorage.getItem("tasks")}.`);
     if (!!window.localStorage.getItem("tasks")) {
         parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
     } else {
         parsedArrayOfTasks = [];
     }
+    console.log("DONE");
 }
 
 // Shows on page the list of tasks from local storage
 function printStartingList() {
     if (!!window.localStorage.getItem("tasks")) {
         parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
+        console.log("Listing the tasks...");
         listTasks(parsedArrayOfTasks);
-        console.log("somthing in local storage");
+        console.log("DONE");
     } else {
-        console.log("nothing in local storage");
+        console.log("No tasks in local storage.");
     }
 }
 
@@ -55,13 +56,12 @@ function menuBarChangeVisibility() {
         // dropDownMenu.style.display = 'none';
         iconClassList.remove("highlight_text");
     }
-
-    console.log("Ikona wciśnięta");
+    console.log("Icon triggered.");
 }
-
 
 // Submits the input text to local storage
 function submitForm(event) {
+    console.log("Submitting new task...");
     // Prevents submit button from refreshing page
     event.preventDefault();
     // Adds new task to the page
@@ -71,6 +71,7 @@ function submitForm(event) {
     window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
     // Clears the input box
     input.value = "";
+    console.log("DONE");
 }
 
 
@@ -93,6 +94,8 @@ function addTask() {
 }
 
 function clearTasks(event) {
+    console.log("Clearing all tasks");
     window.localStorage.setItem("tasks", '[]');
     window.location.reload();
+    console.log("DONE");
 }
