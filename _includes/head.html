@@ -5,9 +5,17 @@
     <script src="js/main.js"></script>
     
     {% if page.title %}
-    <title>{{ page.title }}</title>
+        <title>{{ page.title }} | JS Training Site</title>
     {% else %}
-        <title>JS Training Website</title>
+        <title>JS Training Site</title>
+    {% endif %}
+
+    {% if page.title %}
+        <title>{{ page.title }} | Test Page</title>
+        <meta property="og:title" content="{{ page.title | Test Page }}" />
+    {% else %}
+        <title>Test Page: Don't Panic</title>
+        <meta property="og:title" content="Test Page: Don't Panic" />
     {% endif %}
 
     <link rel="stylesheet" href="css/reset.css">
