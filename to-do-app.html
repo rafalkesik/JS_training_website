@@ -1,15 +1,21 @@
 ---
 layout: default
+name: To-do App
 ---
-<div class="grid">
+<div class="grid app_content">
 
-    <h1 class="grid_2-8">Hello World, time for todo!</h1>
+    <h1 class="grid_2-8">Your personal To-do App:</h1>
 
-    <ul class="grid_2-8">
-        <li>todo</li>
-        <li>toDo</li>
-        <li>todo-toDo-ToDo-toDo-TODOOOOOO</li>
-        <li>Todo-todo</li>
+    <ul class="grid_2-8 todo-list" id="tasksList">
+        <li>
+            <form id="addTaskForm">
+                <input type="text" name="addTask" id="addTask" placeholder="Dodaj nowe zadanie...">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
     </ul>
 
+    <form class="grid_2-8" id="clearTasksForm">
+        <input type="submit" value="Clear tasks" id="clearButton">
+    </form>
 </div>
