@@ -14,10 +14,6 @@ let todoModule = ( (window, document) => {
         if (document.title === "To-do-App | JS Training Site") {
             prepToDoApp();
         }
-
-        let icon = document.getElementById("menu-bar-visible");
-        console.log(icon);
-        icon.addEventListener('click', menuBarChangeVisibility());
     });
 
     // Prepares toDoApp - sets needed values to variables & loads previous tasks from Local Storage.
