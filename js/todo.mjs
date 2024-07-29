@@ -1,7 +1,8 @@
-export { todoModule }
-import { menuBarChangeVisibility } from "./template.mjs";
+// export { todoModule }
+// import { menuBarChangeVisibility } from "./template.mjs";
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus }
 
-let todoModule = ( (window, document) => {
+// let todoModule = ( (window, document) => {
 
 
     // Defines global variables for ToDoApp
@@ -9,26 +10,26 @@ let todoModule = ( (window, document) => {
 
     // Waits for DOM to load to perform &
     // & if page is to-do-app, executes 'prepare' function.
-    document.addEventListener("DOMContentLoaded", function(event) {
-        console.log("DOM loaded.")
-        if (document.title === "To-do-App | JS Training Site") {
-            prepToDoApp();
-        }
-    });
-
+    function start() {
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log("DOM loaded.")
+            if (document.title === "To-do-App | JS Training Site") {
+                prepToDoApp();
+            }
+        });
+    }
     // Prepares toDoApp - sets needed values to variables & loads previous tasks from Local Storage.
     function prepToDoApp() {
         form = document.getElementById("addTaskForm")
-        console.log(form);
         input = document.getElementById("addTask");
         input_li = form.parentNode;
-        list = document.getElementById("tasksList");
+        list = document.getElementById("tasksList");  // check if it's necessary. it is declared later as well. Delete this or there.
         clearForm = document.getElementById("clearTasksForm");
         
         console.log("Adding event listeners on buttons...")
         form.addEventListener('submit', submitForm);
         clearForm.addEventListener('submit', clearTasks);
-        console.log("DONE");
+        console.log("...DONE");
 
         defineArray();
         printStartingList();
@@ -36,23 +37,23 @@ let todoModule = ( (window, document) => {
 
     // Defines initial value of variable parsedArrayOfTasks
     function defineArray() {
-        console.log(`Fetching tasks from local storage: ${window.localStorage.getItem("tasks")}.`);
+        console.log(`Fetching tasks from local storage: ${window.localStorage.getItem("tasks")}...`);
         if (!!window.localStorage.getItem("tasks")) {
             parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
         } else {
             parsedArrayOfTasks = [];
         }
-        console.log("DONE");
+        console.log("...DONE");
     }
 
     // Shows on page the list of tasks from local storage
     function printStartingList() {
         if (!!window.localStorage.getItem("tasks")) {
-            parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
-        
+            // parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks")); //This was here but it seems to be unnecessary.
+
             console.log("Listing the tasks...");
             listTasks(parsedArrayOfTasks);
-            console.log("DONE");
+            console.log("...DONE");
         } else {
             console.log("No tasks in local storage.");
         }
@@ -60,12 +61,19 @@ let todoModule = ( (window, document) => {
 
     // Takes an array and adds list items for each element
     function listTasks(arrayOfTasks) {
-        let list = document.getElementById("tasksList");
-        arrayOfTasks.forEach(element => { //Maybe this should be turned into MAP function?
-            let listItem = document.createElement("li");
-            listItem.innerHTML = element;
-            list.insertBefore(listItem, input_li);
+        // let list = document.getElementById("tasksList");  // this was declared 2nd time. thus i commented it out.
+        arrayOfTasks.forEach((task, index) => {
+            let taskElement = forgeTaskElement(task, index);
+            list.insertBefore(taskElement, input_li);
         });
+    }
+
+    // Returns a task element with checkbox (<li> with inputed data).
+    function forgeTaskElement(task, index) {
+        let taskElement = document.createElement("li");
+        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"> <label for="task-${index}">${task}</label>`;
+
+        return taskElement;
     }
 
     // Submits the input text to local storage
@@ -73,23 +81,21 @@ let todoModule = ( (window, document) => {
         console.log("Submitting new task...");
         // Prevents submit button from refreshing page
         event.preventDefault();
-        // Adds new task to the page
-        addTask();
         // Adds new task to local storage
-        parsedArrayOfTasks.push(input.value);
+        let newTaskIndex = parsedArrayOfTasks.push(input.value);
         window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
+        // Adds new task to the page
+        addTask(input.value, newTaskIndex);
         // Clears the input box
         input.value = "";
-        console.log("DONE");
+        console.log("...DONE");
     }
 
 
     // Adds a task to the To-do App above input
-    function addTask() {
-        let displayElement = document.getElementById("newTask");
-        let listItem = document.createElement("li");
-        listItem.innerHTML = input.value;
-        list.insertBefore(listItem, input_li);
+    function addTask(task, index) {
+        let taskElement = forgeTaskElement(task, index);
+        list.insertBefore(taskElement, input_li);
     }
 
     // Clears tasks from page & local storage & reloads the page
@@ -100,5 +106,20 @@ let todoModule = ( (window, document) => {
         console.log("DONE");
     }
 
+    // Crosses out task text when checkbox checked & reverse.
+    function toggleTaskStatus(input) {
+        let labelText = findLabelOfInput(input);
+        if (input.checked) {
+            labelText.setAttribute('style', 'text-decoration:line-through');
+        } else {
+            labelText.removeAttribute('style');
+        }
+    }
 
-})(window, document);
+    // Returns the label of the given input.
+    function findLabelOfInput(input) {
+        let labels = Array.from(document.getElementsByTagName("label"));
+        return labels.filter(element => element.getAttribute("for") === input.id)[0];
+    }
+
+// })(window, document);
