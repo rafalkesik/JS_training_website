@@ -41,6 +41,11 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         if (!!window.localStorage.getItem("tasks")) {
             parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
             parsedArrayOfStatuses = JSON.parse(window.localStorage.getItem("statuses"));
+            console.log(window.localStorage.getItem("statuses"));
+            if (!window.localStorage.getItem("statuses")) {
+                parsedArrayOfStatuses = [];
+                parsedArrayOfTasks.forEach(element, parsedArrayOfStatuses.push(0));
+            }
         } else {
             parsedArrayOfTasks = [];
             parsedArrayOfStatuses = [];
