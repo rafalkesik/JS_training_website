@@ -80,13 +80,13 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     function forgeTaskElement(task, index) {
         let taskElement = document.createElement("li");
         let checked = "";
-        let style = "";
+        let style = 'pointer-events: none; ';
 
         if (parsedArrayOfStatuses && (parsedArrayOfStatuses[index] === 1)) {
             checked = " checked";
-            style = ' style="text-decoration:line-through"';
+            style += 'text-decoration:line-through';
         }
-        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <label for="task-${index}"${style}>${task}</label>`;
+        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <label for="task-${index}" style="${style}">${task}</label>`;
         return taskElement;
     }
 
@@ -131,9 +131,9 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         parsedArrayOfStatuses[index] = +(input.checked);
         window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
         if (input.checked) {
-            labelText.setAttribute('style', 'text-decoration:line-through');
+            labelText.setAttribute('style', 'pointer-events: none; text-decoration:line-through');
         } else {
-            labelText.removeAttribute('style');
+            labelText.setAttribute('style', 'pointer-events: none;');
         }
     }
 
