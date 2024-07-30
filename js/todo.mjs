@@ -6,7 +6,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
 
     // Defines global variables for ToDoApp
-    let form, input, input_li, list, clearForm, parsedArrayOfTasks;
+    let form, input, input_li, list, clearForm, parsedArrayOfTasks, parsedArrayOfStatuses;
 
     // Waits for DOM to load to perform &
     // & if page is to-do-app, executes 'prepare' function.
@@ -40,8 +40,11 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         console.log(`Fetching tasks from local storage: ${window.localStorage.getItem("tasks")}...`);
         if (!!window.localStorage.getItem("tasks")) {
             parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
+            parsedArrayOfStatuses = JSON.parse(window.localStorage.getItem("statuses"));
         } else {
             parsedArrayOfTasks = [];
+            parsedArrayOfStatuses = [];
+            // teraz powinienem dodać wszystko o parsedArrayOfStatuses, by utrzymywało te status w local storage i go wydobywało.
         }
         console.log("...DONE");
     }
@@ -71,8 +74,14 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     // Returns a task element with checkbox (<li> with inputed data).
     function forgeTaskElement(task, index) {
         let taskElement = document.createElement("li");
-        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"> <label for="task-${index}">${task}</label>`;
+        let checked = "";
+        let style = "";
 
+        if (parsedArrayOfStatuses && (parsedArrayOfStatuses[index] === 1)) {
+            checked = " checked";
+            style = ' style="text-decoration:line-through"';
+        }
+        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <label for="task-${index}"${style}>${task}</label>`;
         return taskElement;
     }
 
@@ -81,9 +90,11 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         console.log("Submitting new task...");
         // Prevents submit button from refreshing page
         event.preventDefault();
-        // Adds new task to local storage
-        let newTaskIndex = parsedArrayOfTasks.push(input.value);
+        // Adds new task to local storage and to parsedArrayOfTasks & -Statuses variables.
+        let newTaskIndex =  (parsedArrayOfTasks.push(input.value)-1);
+                            parsedArrayOfStatuses.push(0);
         window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
+        window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
         // Adds new task to the page
         addTask(input.value, newTaskIndex);
         // Clears the input box
@@ -102,13 +113,18 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     function clearTasks(event) {
         console.log("Clearing all tasks");
         window.localStorage.setItem("tasks", '[]');
+        window.localStorage.setItem("statuses", '[]');
         window.location.reload();
         console.log("DONE");
     }
 
-    // Crosses out task text when checkbox checked & reverse.
+    // Crosses out task text when checkbox checked & reverse & updates statuses variable.
     function toggleTaskStatus(input) {
         let labelText = findLabelOfInput(input);
+        let index = labelText.getAttribute("for").match(/\d+/gm)[0];
+
+        parsedArrayOfStatuses[index] = +(input.checked);
+        window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
         if (input.checked) {
             labelText.setAttribute('style', 'text-decoration:line-through');
         } else {
