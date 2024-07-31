@@ -8,10 +8,16 @@ identifying_class: to-do-app <!-- check if its necessary-->
     <h1 class="grid_2-8">Your personal To-do App:</h1>
 
     <ul class="grid_2-8 todo-list" id="tasksList">
-        <li>
+        <li class="todo-legend">
+            <div class="square">Aa</div> <!-- To be changed to icon-->
+            <span>TASK NAME</span>
+        </li>
+
+        <li class="newtask">
             <form id="addTaskForm">
+                <input type="checkbox">
                 <input type="text" name="Input new task" id="addTask" placeholder="Dodaj nowe zadanie...">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" class="hide">
             </form>
         </li>
     </ul>

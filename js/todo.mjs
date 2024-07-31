@@ -79,6 +79,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     // Returns a task element with checkbox (<li> with inputed data).
     function forgeTaskElement(task, index) {
         let taskElement = document.createElement("li");
+        taskElement.setAttribute("class", "taskItem");
         let checked = "";
         let style = 'pointer-events: none; ';
 
@@ -141,6 +142,12 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     function findLabelOfInput(input) {
         let labels = Array.from(document.getElementsByTagName("label"));
         return labels.filter(element => element.getAttribute("for") === input.id)[0];
+    }
+
+    
+
+    function click() {
+        console.log("clicked on label");
     }
 
 // })(window, document);

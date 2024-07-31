@@ -219,11 +219,64 @@ h3 {
 
 
 /* TODO APP STYLES */
+.content-container .todo-list {
+    margin-left: 0;
+}
 .todo-list {
     line-height: 1.5em;
-    list-style: square;
+    list-style: none;
+}
+
+.todo-list > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border-top: 1px solid rgba(97, 97, 97, 0.7); */
+}
+
+.todo-list > li > input {
+    flex: 0 0 16px;
+}
+.todo-list > li > label {
+    flex: 1 1 0;
+}
+
+.taskItem {
+    border-bottom: 1px solid rgba(97, 97, 97, 0.7);
+}
+.todo-legend {
+    border-bottom: 1px solid rgba(97, 97, 97, 0.7);
+}
+.taskItem:hover {
+    border-bottom: 2px solid rgba(97, 97, 97, 0.7);
+}
+
+.todo-list .todo-legend {
+    /* border-top: none; */
+    color: grey;
 }
 
 .app_content {
     row-gap: 2vh;
+}
+
+.hide {
+    display: none;
+}
+
+.todo-legend > span {
+    margin-left: 4px;
+    font-size: 0.7em;
+}
+.square {
+    display: flex;
+    box-sizing: border-box;
+    height: 12px;
+    width: 12px;
+    border: 1px solid black;
+    margin: 3px 2px;
+    font-size: 0.5em;
+    line-height: 1.5em;
+    justify-content: center;
+    color: black;
 }
