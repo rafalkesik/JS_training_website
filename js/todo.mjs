@@ -31,6 +31,9 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         clearForm.addEventListener('submit', clearTasks);
         console.log("...DONE");
 
+        // let test = document.getElementById("Test");
+        // test.addEventListener('click', click);
+
         defineArray();
         printStartingList();
     }
@@ -81,13 +84,14 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         let taskElement = document.createElement("li");
         taskElement.setAttribute("class", "taskItem");
         let checked = "";
-        let style = 'pointer-events: none; ';
+        let style = '';
 
         if (parsedArrayOfStatuses && (parsedArrayOfStatuses[index] === 1)) {
             checked = " checked";
             style += 'text-decoration:line-through';
         }
-        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <label for="task-${index}" style="${style}">${task}</label>`;
+        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
+        // the above spans should have "task-1-name" id, if we want to pinpoint the specific spans here. This will also require us to edit findNameElement function.
         return taskElement;
     }
 
@@ -126,28 +130,34 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
     // Crosses out task text when checkbox checked & reverse & updates statuses variable.
     function toggleTaskStatus(input) {
-        let labelText = findLabelOfInput(input);
-        let index = labelText.getAttribute("for").match(/\d+/gm)[0];
+        let taskNameElement = findNameElement(input);
+        let index = taskNameElement.getAttribute("id").match(/\d+/gm)[0];
 
         parsedArrayOfStatuses[index] = +(input.checked);
         window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
         if (input.checked) {
-            labelText.setAttribute('style', 'pointer-events: none; text-decoration:line-through');
+            taskNameElement.setAttribute('style', 'text-decoration:line-through');
         } else {
-            labelText.setAttribute('style', 'pointer-events: none;');
+            taskNameElement.setAttribute('style', '');
         }
     }
 
-    // Returns the label of the given input.
-    function findLabelOfInput(input) {
-        let labels = Array.from(document.getElementsByTagName("label"));
-        return labels.filter(element => element.getAttribute("for") === input.id)[0];
+    // Returns the Task Name Element of the given input.
+    function findNameElement(input) {
+        let spans = Array.from(input.parentElement.children);
+        return spans.filter(element => element.tagName === "SPAN")[0];
     }
 
-    
 
-    function click() {
-        console.log("clicked on label");
+    function click(event) {
+        event.preventDefault();
+        console.log("clicked on button");
+
+
+        // let inputu = document.getElementById("Test");
+        // let impotent = Array.from(inputu.parentElement.children);
+        // impotent = impotent.filter(element => element.tagName === "SPAN")
+        // console.log(impotent[0]);
     }
 
 // })(window, document);
