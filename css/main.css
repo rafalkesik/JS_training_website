@@ -47,7 +47,7 @@ h3 {
 .grid_4-6 {
     grid-column: 4 / 6;
 }
-.drid_1-8 {
+.grid_1-8 {
     grid-column: 1 / 8;
 }
 
@@ -237,7 +237,7 @@ h3 {
 .todo-list > li > input {
     flex: 0 0 16px;
 }
-.todo-list > li > label {
+.todo-list > li > span {
     flex: 1 1 0;
 }
 
@@ -249,7 +249,9 @@ h3 {
 }
 .taskItem:hover {
     border-bottom: 2px solid rgba(97, 97, 97, 0.7);
+
 }
+
 
 .todo-list .todo-legend {
     /* border-top: none; */

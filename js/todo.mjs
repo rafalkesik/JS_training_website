@@ -1,12 +1,12 @@
 // export { todoModule }
 // import { menuBarChangeVisibility } from "./template.mjs";
-export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus }
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask }
 
 // let todoModule = ( (window, document) => {
 
 
     // Defines global variables for ToDoApp
-    let form, input, input_li, list, clearForm, parsedArrayOfTasks, parsedArrayOfStatuses;
+    let form, input, input_li, list, clearForm, parsedArrayOfTasks, parsedArrayOfStatuses, test;
 
     // Waits for DOM to load to perform &
     // & if page is to-do-app, executes 'prepare' function.
@@ -31,8 +31,8 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         clearForm.addEventListener('submit', clearTasks);
         console.log("...DONE");
 
-        // let test = document.getElementById("Test");
-        // test.addEventListener('click', click);
+        test = document.getElementById("Test");
+        test.addEventListener('click', click);
 
         defineArray();
         printStartingList();
@@ -85,17 +85,22 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         taskElement.setAttribute("class", "taskItem");
         let checked = "";
         let style = '';
-
+        
         if (parsedArrayOfStatuses && (parsedArrayOfStatuses[index] === 1)) {
             checked = " checked";
             style += 'text-decoration:line-through';
         }
-        taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
-        // the above spans should have "task-1-name" id, if we want to pinpoint the specific spans here. This will also require us to edit findNameElement function.
+        let taskInput = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
+        let taskName = `<span id="task-${index}" style="${style}">${task}</span>`;
+        let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
+
+        // taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
+        taskElement.innerHTML = `${taskInput} ${taskName} ${taskDelete}`;
+
         return taskElement;
     }
 
-    // Submits the input text to local storage
+    // Submits the input text to local storage & parsedArrayOfTasks & -Statuses variable
     function submitForm(event) {
         console.log("Submitting new task...");
         // Prevents submit button from refreshing page
@@ -121,11 +126,46 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
     // Clears tasks from page & local storage & reloads the page
     function clearTasks(event) {
+        event.preventDefault();
+
         console.log("Clearing all tasks");
+        clearTasksOnScreen();
+        clearTasksStored();
+        console.log("DONE");
+    }
+
+    function clearTasksOnScreen() {
+        let taskList = (document.getElementsByClassName("taskItem"));
+        let taskListArray = Array.from(taskList);
+
+        taskListArray.forEach(element => {
+            taskList[0].remove();
+        });
+    }
+
+    function clearTasksStored() {
         window.localStorage.setItem("tasks", '[]');
         window.localStorage.setItem("statuses", '[]');
-        window.location.reload();
-        console.log("DONE");
+        parsedArrayOfTasks = [];
+        parsedArrayOfStatuses = [];
+    }
+
+    function deleteTask(input) {
+        let removedElement = input.parentElement;
+        let id = Array.from(removedElement.children)[0].getAttribute("id");
+        let removedIndex = id.match(/\d+/gm)[0];
+
+        // change clear funtion to have 2 functions: clear tasks, & clear storage
+            // done
+        // call clear tasks func
+            clearTasksOnScreen();
+        // remove the task from variables & local storage
+            parsedArrayOfTasks.splice(removedIndex, 1);
+            parsedArrayOfStatuses.splice(removedIndex, 1);
+            window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
+            window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
+        // call listitems func
+            listTasks(parsedArrayOfTasks);
     }
 
     // Crosses out task text when checkbox checked & reverse & updates statuses variable.
@@ -153,11 +193,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         event.preventDefault();
         console.log("clicked on button");
 
-
-        // let inputu = document.getElementById("Test");
-        // let impotent = Array.from(inputu.parentElement.children);
-        // impotent = impotent.filter(element => element.tagName === "SPAN")
-        // console.log(impotent[0]);
+        clearTasksOnScreen();
     }
 
 // })(window, document);
