@@ -6,7 +6,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
 
     // Defines global variables for ToDoApp
-    let form, input, input_li, list, clearForm, parsedArrayOfTasks, parsedArrayOfStatuses, test;
+    let form, input, input_li, list, clearForm, parsedArrayOfTasks, parsedArrayOfStatuses, test, parsedArrayOfTags;
 
     // Waits for DOM to load to perform &
     // & if page is to-do-app, executes 'prepare' function.
@@ -33,6 +33,8 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
         test = document.getElementById("Test");
         test.addEventListener('click', click);
+        let testSelect = document.getElementById("test-select");
+        testSelect.addEventListener('change', click);
 
         defineArray();
         printStartingList();
@@ -44,14 +46,22 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         if (!!window.localStorage.getItem("tasks")) {
             parsedArrayOfTasks = JSON.parse(window.localStorage.getItem("tasks"));
             parsedArrayOfStatuses = JSON.parse(window.localStorage.getItem("statuses"));
+            parsedArrayOfTags = JSON.parse(window.localStorage.getItem("tags"));
             console.log(window.localStorage.getItem("statuses"));
             if (!window.localStorage.getItem("statuses")) {
                 parsedArrayOfStatuses = [];
                 parsedArrayOfTasks.forEach(() => {parsedArrayOfStatuses.push(0)});
             }
+            console.log((!window.localStorage.getItem("tags")));
+            console.log(`${parsedArrayOfTags}`);
+            if (!window.localStorage.getItem("tags")) {
+                parsedArrayOfTags = [];
+                parsedArrayOfTasks.forEach(() => {parsedArrayOfTags.push("0")});
+            }
         } else {
             parsedArrayOfTasks = [];
             parsedArrayOfStatuses = [];
+            parsedArrayofTags = [];
             // teraz powinienem dodać wszystko o parsedArrayOfStatuses, by utrzymywało te status w local storage i go wydobywało.
         }
         console.log("...DONE");
@@ -76,6 +86,8 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         arrayOfTasks.forEach((task, index) => {
             let taskElement = forgeTaskElement(task, index);
             list.insertBefore(taskElement, input_li);
+            let newTaskElement = document.getElementById(`task-${index}`).parentElement
+            saveTagChanges(newTaskElement);    
         });
     }
 
@@ -93,9 +105,10 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         let taskInput = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
         let taskName = `<span id="task-${index}" style="${style}">${task}</span>`;
         let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
+        let taskTag = ForgeTagsElement(index);
 
         // taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
-        taskElement.innerHTML = `${taskInput} ${taskName} ${taskDelete}`;
+        taskElement.innerHTML = `${taskInput} ${taskName} ${taskTag} ${taskDelete}`;
 
         return taskElement;
     }
@@ -122,6 +135,8 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     function addTask(task, index) {
         let taskElement = forgeTaskElement(task, index);
         list.insertBefore(taskElement, input_li);
+        let newTaskElement = document.getElementById(`task-${index}`).parentElement
+        saveTagChanges(newTaskElement);  
     }
 
     // Clears tasks from page & local storage & reloads the page
@@ -146,8 +161,10 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     function clearTasksStored() {
         window.localStorage.setItem("tasks", '[]');
         window.localStorage.setItem("statuses", '[]');
+        window.localStorage.setItem("tags", '[]');
         parsedArrayOfTasks = [];
         parsedArrayOfStatuses = [];
+        parsedArrayOfTags = [];
     }
 
     function deleteTask(input) {
@@ -162,8 +179,10 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         // remove the task from variables & local storage
             parsedArrayOfTasks.splice(removedIndex, 1);
             parsedArrayOfStatuses.splice(removedIndex, 1);
+            parsedArrayOfTags.splice(removedIndex, 1);
             window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
             window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
+            window.localStorage.setItem("tags", JSON.stringify(parsedArrayOfTags));
         // call listitems func
             listTasks(parsedArrayOfTasks);
     }
@@ -188,12 +207,47 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         return spans.filter(element => element.tagName === "SPAN")[0];
     }
 
+    function ForgeTagsElement(id) {
+        let tags = ["Programowanie", "Sport", "NIEZREALIZOWANE"];
+        let tagsElements = "";
+        let value = null
+        if (JSON.parse(window.localStorage.getItem("tags"))) {
+            value = JSON.parse(window.localStorage.getItem("tags"))[id];
+        }
+        tags.forEach ((element, index) => {
+            let selected = "";
+            if (`${index}` === value) {
+                selected = " selected='selected'";
+            }
+
+            tagsElements += `<option value="${index}"${selected}>${element}</option>`;
+        });
+        let select = `<span> <select id="tag-${id}"> ${tagsElements} </select> </span>`;
+
+        return select;
+    }
+
+    function saveTagChanges(taskElement) {
+        let id = Array.from(taskElement.children)[1].getAttribute("id");
+        let index = id.match(/\d+/gm)[0];
+        let tagElement = document.getElementById(`tag-${index}`)
+
+        tagElement.addEventListener('change', function() {
+            // parsedArrayOfTags = [0, 0, 0];
+            parsedArrayOfTags[index] = tagElement.value;
+            console.log(parsedArrayOfTags);
+            window.localStorage.setItem("tags", JSON.stringify(parsedArrayOfTags));
+        });
+    }
+
 
     function click(event) {
         event.preventDefault();
         console.log("clicked on button");
 
-        clearTasksOnScreen();
+        // let taskElement = Array.from(document.getElementById("tasksList").children)[2];
+        // console.log(taskElement);
+        // saveTagChanges(taskElement);
     }
 
 // })(window, document);

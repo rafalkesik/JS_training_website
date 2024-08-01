@@ -240,6 +240,15 @@ h3 {
 .todo-list > li > span {
     flex: 1 1 0;
 }
+.todo-list > li > div.normal-column {
+    flex: 1 1 0;
+}
+.todo-list > li > div.medium-column {
+    flex: 0 0 47px;
+}
+.todo-list > li > div.tiny-column {
+    flex: 0 0 16px;
+}
 
 .taskItem {
     border-bottom: 1px solid rgba(97, 97, 97, 0.7);

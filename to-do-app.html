@@ -9,9 +9,22 @@ identifying_class: to-do-app <!-- check if its necessary-->
 
     <ul class="grid_2-8 todo-list" id="tasksList">
         <li class="todo-legend">
-            <!-- <div class="square">Aa</div> To be changed to icon -->
-            <i class="fa-solid fa-list-check fa-fw fa-xs"></i>
-            <span>TASK NAME</span>
+            
+            <div class="tiny-column">
+                <i class="fa-solid fa-list-check fa-xs"></i>
+            </div>
+            <div class="normal-column">
+                <span>TASK NAME</span>
+            </div>
+
+            <div class="normal-column">
+                <i class="fa-solid fa-tags fa-sm"></i>
+                <span>TAG</span>
+            </div>
+
+            <div class="medium-column">
+                <span> </span>
+            </div>
         </li>
 
         <li class="newtask">
@@ -26,10 +39,17 @@ identifying_class: to-do-app <!-- check if its necessary-->
     <form class="grid_2-8" id="clearTasksForm">
         <input type="submit" value="Clear tasks" id="clearButton">
     </form>
-    
+
     <form class="grid_2-8" id="teeest" style="display: none">
         <input type="checkbox" name="" id="testCheckbox-1">
         <input type="button" value="Test" id="Test">
         <span>dupa w kraty</span>
     </form>
+
+    <select name="" id="test-select" style="display: none;">
+        <option value="1">a</option>
+        <option value="2" selected="selected">b</option>
+    </select>
+
+
 </div>
