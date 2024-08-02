@@ -240,6 +240,9 @@ h3 {
 .todo-list > li > span {
     flex: 1 1 0;
 }
+.todo-list > li > form.normal-column {
+    flex: 1 1 0;
+}
 .todo-list > li > div.normal-column {
     flex: 1 1 0;
 }

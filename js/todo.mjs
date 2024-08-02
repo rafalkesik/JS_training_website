@@ -1,6 +1,6 @@
 // export { todoModule }
 // import { menuBarChangeVisibility } from "./template.mjs";
-export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove }
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove, click2, editName }
 
 // let todoModule = ( (window, document) => {
 
@@ -102,16 +102,17 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
             checked = " checked";
             style += 'text-decoration:line-through';
         }
-        let taskInput = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
-        let taskName = `<span id="task-${index}" style="${style}">${task}</span>`;
-        let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
+        let taskInput = `<input type="checkbox" name="Check task as completed" id="checkbox-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
+        let taskName = `<span class="clickable" id="task-${index}" style="${style}" onclick="todo.editName(${index})">${task}</span>`;
+        let taskNameEdit = `<form class="normal-column" style="display: none"> <input type="text" value="${parsedArrayOfTasks[index]}" style="display: none;"> </form>`
         let taskTag = ForgeTagsElement(index);
         let taskMoveUp = `<i class="fa-solid fa-circle-up clickable" onclick="todo.taskMove(${index}, 1)"></i>`
         let taskMoveDown = `<i class="fa-solid fa-circle-down clickable" onclick="todo.taskMove(${index}, 0)"></i>`
         let taskMove = `<span class="medium-column"> ${taskMoveUp} ${taskMoveDown} </span>`;
+        let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
 
         // taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
-        taskElement.innerHTML = `${taskInput} ${taskName} ${taskTag} ${taskMove} ${taskDelete}`;
+        taskElement.innerHTML = `${taskInput} ${taskName} ${taskNameEdit} ${taskTag} ${taskMove} ${taskDelete}`;
 
         return taskElement;
     }
@@ -290,15 +291,65 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         window.localStorage.setItem("tags", JSON.stringify(parsedArrayOfTags));
     }
 
+    function editName(index) {
+        let name = document.getElementById(`task-${index}`);
+        let nameInput = name.nextElementSibling.firstElementChild;
+        console.log(nameInput);
+        let checkbox = document.getElementById(`checkbox-${index}`);
+        console.log(checkbox);
+        console.log(checkbox.checked);
+        name.setAttribute("style", "display: none");
+        nameInput.setAttribute("style", "inline-block");
+        nameInput.parentElement.setAttribute("style", "inline-block")
+        
+        nameInput.focus();
+        nameInput.parentElement.addEventListener('submit', function(event) {
+            event.preventDefault();
+            name.textContent = nameInput.value;
+            parsedArrayOfTasks[index] = nameInput.value;
+            uploadToLocalStorage();
+
+            let cross = "";
+            if (checkbox.checked) {
+                console.log("crossing out");
+                cross = " text-decoration:line-through"
+            }
+
+            name.setAttribute("style", `display: inline-block;${cross}`);
+            nameInput.setAttribute("style", "display: none")
+            nameInput.parentElement.setAttribute("style", "display: none")
+        });
+    }
+
     function click(element) {
         // event.preventDefault();
         console.log("clicked on button");
-        taskMove(2, 0);
-        // console.log(changePlaces([1, 2, 3], 0, 2));
 
-        // let taskElement = Array.from(document.getElementById("tasksList").children)[2];
-        // console.log(taskElement);
-        // saveTagChanges(taskElement);
+        let name = document.getElementById("lol");
+        let nameInput = name.nextElementSibling;
+
+        name.setAttribute("style", "display: none");
+        nameInput.setAttribute("style", "inline-block");
+        
+        nameInput.focus();
+        nameInput.parentElement.addEventListener('submit', function(event) {
+            event.preventDefault();
+            name.textContent = nameInput.value;
+
+            name.setAttribute("style", "display: inline-block");
+            nameInput.setAttribute("style", "display: none");
+                
+        });
+    }
+
+    function click2(event) {
+        event.preventDefault();
+        let name = document.getElementById("lol");
+        name.textContent = newTaskName;    
+
+        // let name = document.getElementById("lol");
+        // let nameInput = name.nextElementSibling;
+        // name.textContent = newTaskName;
     }
 
 // })(window, document);
