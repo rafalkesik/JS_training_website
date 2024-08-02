@@ -249,6 +249,9 @@ h3 {
 .todo-list > li > div.tiny-column {
     flex: 0 0 16px;
 }
+.todo-list > li > span.medium-column {
+    flex: 0 0 47px;
+}
 
 .taskItem {
     border-bottom: 1px solid rgba(97, 97, 97, 0.7);
@@ -279,15 +282,9 @@ h3 {
     margin-left: 4px;
     font-size: 0.7em;
 }
-.square {
-    display: flex;
-    box-sizing: border-box;
-    height: 12px;
-    width: 12px;
-    border: 1px solid black;
-    margin: 3px 2px;
-    font-size: 0.5em;
-    line-height: 1.5em;
-    justify-content: center;
-    color: black;
+
+.clickable:hover {
+    cursor: pointer;
 }
+
+

@@ -1,6 +1,6 @@
 // export { todoModule }
 // import { menuBarChangeVisibility } from "./template.mjs";
-export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask }
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove }
 
 // let todoModule = ( (window, document) => {
 
@@ -106,9 +106,12 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         let taskName = `<span id="task-${index}" style="${style}">${task}</span>`;
         let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
         let taskTag = ForgeTagsElement(index);
+        let taskMoveUp = `<i class="fa-solid fa-circle-up clickable" onclick="todo.taskMove(${index}, 1)"></i>`
+        let taskMoveDown = `<i class="fa-solid fa-circle-down clickable" onclick="todo.taskMove(${index}, 0)"></i>`
+        let taskMove = `<span class="medium-column"> ${taskMoveUp} ${taskMoveDown} </span>`;
 
         // taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
-        taskElement.innerHTML = `${taskInput} ${taskName} ${taskTag} ${taskDelete}`;
+        taskElement.innerHTML = `${taskInput} ${taskName} ${taskTag} ${taskMove} ${taskDelete}`;
 
         return taskElement;
     }
@@ -240,10 +243,58 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         });
     }
 
+    // moves task up for 1 and down for 0
+    function taskMove(id, direction) {
+        if ((direction !== 0) && (direction !== 1)) {
+            throw(console.error(`TaskMove(id, direction) function error. Passed direction value (${direction}) is invalid. Direction should be 1 for move-up and 0 for move-down.`));
+        }
+        if ((id === 0 && direction === 1) || (id === (parsedArrayOfTasks.length-1) && direction === 0)) {
+            console.log("You can't move it anymore in this direction.");
+            return
+        }
 
-    function click(event) {
-        event.preventDefault();
+        if (direction === 1) {
+            console.log("moving up");
+            parsedArrayOfTasks = changePlaces(parsedArrayOfTasks, id, id-1);
+            parsedArrayOfStatuses = changePlaces(parsedArrayOfStatuses, id, id-1);
+            parsedArrayOfTags = changePlaces(parsedArrayOfTags, id, id-1);
+            uploadToLocalStorage();
+
+            clearTasksOnScreen();
+            listTasks(parsedArrayOfTasks)
+        }
+        if (direction === 0) {
+            console.log("moving down");
+            parsedArrayOfTasks = changePlaces(parsedArrayOfTasks, id, id+1);
+            parsedArrayOfStatuses = changePlaces(parsedArrayOfStatuses, id, id+1);
+            parsedArrayOfTags = changePlaces(parsedArrayOfTags, id, id+1);
+            uploadToLocalStorage();
+            
+            clearTasksOnScreen();
+            listTasks(parsedArrayOfTasks)
+        } 
+
+    }
+
+    function changePlaces(array, idx1, idx2) {
+        let first = array[idx1];
+        let second = array[idx2];
+        array.splice(idx1, 1, second);
+        array.splice(idx2, 1, first);
+        return array;
+    }
+
+    function uploadToLocalStorage() {
+        window.localStorage.setItem("tasks", JSON.stringify(parsedArrayOfTasks));
+        window.localStorage.setItem("statuses", JSON.stringify(parsedArrayOfStatuses));
+        window.localStorage.setItem("tags", JSON.stringify(parsedArrayOfTags));
+    }
+
+    function click(element) {
+        // event.preventDefault();
         console.log("clicked on button");
+        taskMove(2, 0);
+        // console.log(changePlaces([1, 2, 3], 0, 2));
 
         // let taskElement = Array.from(document.getElementById("tasksList").children)[2];
         // console.log(taskElement);
