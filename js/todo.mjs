@@ -303,6 +303,20 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         nameInput.parentElement.setAttribute("style", "inline-block")
         
         nameInput.focus();
+
+        nameInput.addEventListener('focusout', function() {
+            let cross = "";
+            if (checkbox.checked) {
+                console.log("crossing out");
+                cross = " text-decoration:line-through"
+            }
+
+            name.setAttribute("style", `display: inline-block;${cross}`);
+            nameInput.setAttribute("style", "display: none")
+            nameInput.parentElement.setAttribute("style", "display: none")
+            return
+        });
+
         nameInput.parentElement.addEventListener('submit', function(event) {
             event.preventDefault();
             name.textContent = nameInput.value;
