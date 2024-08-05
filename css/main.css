@@ -266,6 +266,12 @@ h3 {
     border-bottom: 2px solid rgba(97, 97, 97, 0.7);
 
 }
+.unfinished {
+    background-color: lightcoral;
+}
+.finished {
+    background-color: greenyellow;
+}
 
 
 .todo-list .todo-legend {

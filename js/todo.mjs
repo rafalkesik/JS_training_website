@@ -1,6 +1,6 @@
 // export { todoModule }
 // import { menuBarChangeVisibility } from "./template.mjs";
-export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove, click2, editName }
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove, click2, editName, markCompletion }
 
 // let todoModule = ( (window, document) => {
 
@@ -97,7 +97,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         taskElement.setAttribute("class", "taskItem");
         let checked = "";
         let style = '';
-        
+
         if (parsedArrayOfStatuses && (parsedArrayOfStatuses[index] === 1)) {
             checked = " checked";
             style += 'text-decoration:line-through';
@@ -138,6 +138,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     // Adds a task to the To-do App above input
     function addTask(task, index) {
         let taskElement = forgeTaskElement(task, index);
+
         list.insertBefore(taskElement, input_li);
         let newTaskElement = document.getElementById(`task-${index}`).parentElement
         saveTagChanges(newTaskElement);  
@@ -146,6 +147,10 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
     // Clears tasks from page & local storage & reloads the page
     function clearTasks(event) {
         event.preventDefault();
+        if (!confirm("Are you sure?")) {
+            console.log("Aborted clearing the tasks");
+            return;
+        }
 
         console.log("Clearing all tasks");
         clearTasksOnScreen();
@@ -291,6 +296,8 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         window.localStorage.setItem("tags", JSON.stringify(parsedArrayOfTags));
     }
 
+    // This function edits the title of the task. 
+    // Keywords: edit task name; edit task title; edit task text;
     function editName(index) {
         let name = document.getElementById(`task-${index}`);
         let nameInput = name.nextElementSibling.firstElementChild;
@@ -308,7 +315,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
             let cross = "";
             if (checkbox.checked) {
                 console.log("crossing out");
-                cross = " text-decoration:line-through"
+                cross = " text-decoration:line-through;"
             }
 
             name.setAttribute("style", `display: inline-block;${cross}`);
@@ -332,6 +339,18 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
             name.setAttribute("style", `display: inline-block;${cross}`);
             nameInput.setAttribute("style", "display: none")
             nameInput.parentElement.setAttribute("style", "display: none")
+        });
+    }
+
+    function markCompletion() {
+        let tasks = Array.from(document.getElementsByClassName("taskItem"));
+        tasks.forEach((task, index) => {
+            if (parsedArrayOfStatuses[index] === 0) {
+                task.classList.add("unfinished");
+            } else {
+                task.classList.add("finished");
+            }
+            
         });
     }
 
