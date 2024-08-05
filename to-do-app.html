@@ -17,7 +17,7 @@ identifying_class: to-do-app <!-- check if its necessary-->
                 <span>TASK NAME</span>
             </div>
 
-            <div class="normal-column">
+            <div class="normal-column tag-marker">
                 <i class="fa-solid fa-tags fa-sm"></i>
                 <span>TAG</span>
             </div>
@@ -32,21 +32,22 @@ identifying_class: to-do-app <!-- check if its necessary-->
 
         <li class="newtask">
             <form id="addTaskForm">
-                <input type="checkbox">
-                <input type="text" name="Input new task" id="addTask" placeholder="Dodaj nowe zadanie...">
+                <span class="tiny-column"></span>
+                <input type="text" name="Input new task" id="addTask" placeholder="Add new task">
                 <input type="submit" value="Submit" class="hide">
             </form>
         </li>
     </ul>
+    
+    <div class="grid_2-8">
+        <form class="button" id="clearTasksForm">
+            <input type="submit" value="Clear tasks" id="clearButton">
+        </form>
 
-    <form class="grid_2-8" id="clearTasksForm">
-        <input type="submit" value="Clear tasks" id="clearButton">
-    </form>
-
-    <form class="grid_2-8" id="mark-completion">
-        <input type="button" value="Mark completion" id="mark-completion-button" onclick="todo.markCompletion()">
-    </form>
-
+        <form class="button" id="mark-completion">
+            <input type="button" value="Mark completion" id="mark-completion-button" onclick="todo.markCompletion()">
+        </form>
+    </div>
 
     <form class="grid_2-8" id="teeest" style="display: none">
         <input type="checkbox" name="" id="testCheckbox-1">

@@ -1,6 +1,6 @@
 // export { todoModule }
 // import { menuBarChangeVisibility } from "./template.mjs";
-export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove, click2, editName, markCompletion }
+export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitForm, addTask, clearTasks, toggleTaskStatus, deleteTask, click, taskMove, click2, editName, markCompletion, showMobileOptions, hideMobileOptions }
 
 // let todoModule = ( (window, document) => {
 
@@ -102,17 +102,26 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
             checked = " checked";
             style += 'text-decoration:line-through';
         }
-        let taskInput = `<input type="checkbox" name="Check task as completed" id="checkbox-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
-        let taskName = `<span class="clickable" id="task-${index}" style="${style}" onclick="todo.editName(${index})">${task}</span>`;
-        let taskNameEdit = `<form class="normal-column" style="display: none"> <input type="text" value="${parsedArrayOfTasks[index]}" style="display: none;"> </form>`
-        let taskTag = ForgeTagsElement(index);
+
+        let mouseTags = '';
+        let clickTag = ` onclick="todo.editName(${index})"`;
+        if (window.innerWidth < 600) {
+            mouseTags = ` onmouseover="todo.showMobileOptions(${index})" onmouseout="todo.hideMobileOptions(${index})"`;
+            clickTag = '';
+        };
+        
+        let taskInput = `<input class="checkbox" type="checkbox" name="Check task as completed" id="checkbox-${index}" onclick="todo.toggleTaskStatus(this)"${checked}>`;
+        let taskName = `<span class="clickable task-name" id="task-${index}" style="${style}" ${clickTag} ${mouseTags}>${task}</span>`;
+        let taskNameEdit = `<form class="normal-column" style="display: none"> <input type="text" value="${parsedArrayOfTasks[index]}" style="display: none;" ${mouseTags}> </form>`
+        let taskTag = ForgeTagsElement(index, mouseTags);
+        let mobileNameEdit = `<input class="mobile-name-edit" type="button" value="Edit" onclick="todo.editName(${index})" ${mouseTags}>`; // HERE TUTAJ
         let taskMoveUp = `<i class="fa-solid fa-circle-up clickable" onclick="todo.taskMove(${index}, 1)"></i>`
         let taskMoveDown = `<i class="fa-solid fa-circle-down clickable" onclick="todo.taskMove(${index}, 0)"></i>`
-        let taskMove = `<span class="medium-column"> ${taskMoveUp} ${taskMoveDown} </span>`;
-        let taskDelete = '<input type="button" value="Delete" onclick="todo.deleteTask(this)"">';
-
+        let taskMove = `<span class="medium-column arrows-element" ${mouseTags}> ${taskMoveUp} ${taskMoveDown} </span>`;
+        let taskDelete = `<input class="delete-element" type="button" value="Delete" onclick="todo.deleteTask(this)"" ${mouseTags}>`;
+        
         // taskElement.innerHTML = `<input type="checkbox" name="Check task as completed" id="task-${index}" onclick="todo.toggleTaskStatus(this)"${checked}> <span id="task-${index}" style="${style}">${task}</span>`;
-        taskElement.innerHTML = `${taskInput} ${taskName} ${taskNameEdit} ${taskTag} ${taskMove} ${taskDelete}`;
+        taskElement.innerHTML = `${taskInput} ${taskName} ${taskNameEdit} ${taskTag} ${mobileNameEdit} ${taskMove} ${taskDelete}`;
 
         return taskElement;
     }
@@ -216,7 +225,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
         return spans.filter(element => element.tagName === "SPAN")[0];
     }
 
-    function ForgeTagsElement(id) {
+    function ForgeTagsElement(id, mouseTags) {
         let tags = ["Programowanie", "Sport", "NIEZREALIZOWANE"];
         let tagsElements = "";
         let value = null
@@ -231,7 +240,7 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
 
             tagsElements += `<option value="${index}"${selected}>${element}</option>`;
         });
-        let select = `<span> <select id="tag-${id}"> ${tagsElements} </select> </span>`;
+        let select = `<span class="tag-element"${mouseTags}> <select id="tag-${id}"> ${tagsElements} </select> </span>`;
 
         return select;
     }
@@ -352,6 +361,29 @@ export { start, prepToDoApp, defineArray, printStartingList, listTasks, submitFo
             }
             
         });
+    }
+
+    function showMobileOptions (index) {
+        let clickedTask = Array.from(document.getElementsByClassName("taskItem"))[index];
+        let arrowsElement = Array.from(clickedTask.getElementsByClassName("arrows-element"))[0];
+        let deleteElement = Array.from(clickedTask.getElementsByClassName("delete-element"))[0];
+        let editElement = Array.from(clickedTask.getElementsByClassName("mobile-name-edit"))[0];
+
+        arrowsElement.style = "display: inline-block"
+        deleteElement.style = "display: inline-block"
+        editElement.style = "display: inline-block"
+        clickedTask.style.flex = "1"
+    }
+
+    function hideMobileOptions (index) {
+        let clickedTask = Array.from(document.getElementsByClassName("taskItem"))[index];
+        let arrowsElement = Array.from(clickedTask.getElementsByClassName("arrows-element"))[0];
+        let deleteElement = Array.from(clickedTask.getElementsByClassName("delete-element"))[0];
+        let editElement = Array.from(clickedTask.getElementsByClassName("mobile-name-edit"))[0];
+
+        arrowsElement.style = "display: none"
+        deleteElement.style = "display: none"
+        editElement.style = "display: none"
     }
 
     function click(element) {

@@ -50,6 +50,9 @@ h3 {
 .grid_1-8 {
     grid-column: 1 / 8;
 }
+.grid_2-4 {
+    grid-column: 2 / 4;
+}
 
 /* CONTENT STYLES */
 .content-container {
@@ -201,6 +204,52 @@ h3 {
         color: lightsalmon;
     }
     
+/* TODO APP MOBILE RESPONSIVE STYLES */
+    .tag-element, .arrows-element, .delete-element, .tag-marker, .todo-list > .todo-legend, .mobile-name-edit {
+        display: none;
+    }
+    .task-name {
+        font-size: 2em;
+    }
+    .content-container .todo-list {
+        line-height: normal;
+    }
+    .todo-list > li > input.checkbox {
+        flex: 0 0 30px;
+    }
+    .taskItem {
+        border-top: 1px solid rgba(97, 97, 97, 0.7);
+    }
+    
+    .newtask {
+        margin-top: 0.5em;
+    }
+
+    input[type='checkbox'] {
+        -webkit-appearance:none;
+        width:30px;
+        height:30px;
+        background:white;
+        border-radius:5px;
+        border:2px solid #555;
+        margin-right: 2em;
+    }
+    input[type='checkbox']:checked {
+        background: darkcyan;
+    }
+    input[type='text'] {
+        font-size: 1.5em;
+        max-width: 70vw;
+    }
+    form > span.tiny-column {
+        display: none;
+    }
+
+    .button > input {
+        font-size: 1.5em;
+    }
+
+
     @media (max-height: 400px) {
         .header .nav-links {
             top: 40px;
@@ -225,6 +274,7 @@ h3 {
 .todo-list {
     line-height: 1.5em;
     list-style: none;
+    margin-bottom: 5vh;
 }
 
 .todo-list > li {
@@ -249,12 +299,21 @@ h3 {
 .todo-list > li > div.medium-column {
     flex: 0 0 47px;
 }
-.todo-list > li > div.tiny-column {
+.todo-list > li > div.tiny-column, .tiny-column {
     flex: 0 0 16px;
 }
 .todo-list > li > span.medium-column {
     flex: 0 0 47px;
 }
+span.tiny-column {
+    display: inline-block;
+    width: 15px
+}
+
+.button {
+    display: inline-block;
+}
+
 
 .taskItem {
     border-bottom: 1px solid rgba(97, 97, 97, 0.7);
