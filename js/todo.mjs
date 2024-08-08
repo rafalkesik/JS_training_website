@@ -22,7 +22,7 @@ function prepToDoApp() {
     form = document.getElementById("addTaskForm")
     input = document.getElementById("addTask");
     input_li = form.parentNode;
-    list = document.getElementById("tasksList");  // check if it's necessary. it is declared later as well. Delete this or there.
+    list = document.getElementById("tasksList");
     clearForm = document.getElementById("clearTasksForm");
     
     console.log("Adding event listeners on buttons...")
@@ -94,9 +94,6 @@ function colorPrioBox(index) {
     let prioBox = document.getElementById(`prio-box-${index}`);
     let prioChooseBox = document.getElementById(`priority-${index}`);
     prioBox.setAttribute("data-chosen", prioChooseBox.value);
-    // DONE ustal data-chosen jako value parsedarrayofpriorities[index]
-    // dodaj onchange w forgepriorityelement, by tz zmienial priobox
-    // dodaj klasę w main.css, by divy z data-chosen jako value miało kolorki
 }
 
 // Returns a whole task element.
@@ -114,18 +111,11 @@ function forgeTaskElement(task, index) {
     }
     
     let onMouseOverTags = ` onmouseover="todo.showMobileOptions(${index})" onmouseout="todo.hideMobileOptions(${index})"`;
-
-
-    // Adds style showing options on hover, for Mobiles.
-    let onClickTag = ` onmousedown="todo.editName(event, ${index})"`;
-    if (window.innerWidth < 600) {
-        onClickTag = '';
-    };
     
     // Makes individual elements of Task Element.
     let taskCheckbox = `<input class="checkbox" type="checkbox" name="Check task as completed" id="checkbox-${index}" onclick="todo.toggleTaskStatus(this)" ${checked}>`;
     let prioBox = `<div class='prio-box' id='prio-box-${index}'> </div>`
-    let taskName = `<div class="clickable task-name" id="task-${index}" style="${style}">${task}</div>`;
+    let taskName = `<div class="task-name" id="task-${index}" style="${style}">${task}</div>`;
     let taskNameEdit = `<form class="task-name-edit" style="display: none"> <input type="text" value="${parsedArrayOfTasks[index]}" id="task-name-edit-${index}"> </form>`;
     let mobileNameEdit = `<span class="mobile-name-edit" onmousedown="todo.editName(event, ${index})"> <input type="button" value="Edit" id="edit-button-${index}" style="display: none"> </span>`;
     let taskAssignTag = ForgeTagsElement(index);
@@ -198,7 +188,7 @@ function clearTasksOnScreen() {
     let taskList = (document.getElementsByClassName("taskItem"));
     let taskListArray = Array.from(taskList);
 
-    taskListArray.forEach(element => {
+    taskListArray.forEach(() => {
         taskList[0].remove();
     });
 }
@@ -237,12 +227,6 @@ function toggleTaskStatus(input) {
     } else {
         taskNameElement.style.removeProperty('text-decoration');
     }
-}
-
-// Returns the Task Name Element of the given input.
-function findNameElement(input) {
-    let spans = Array.from(input.parentElement.children);
-    return spans.filter(element => element.tagName === "SPAN")[0];
 }
 
 function ForgeTagsElement(id) {
@@ -294,7 +278,6 @@ function saveTagAndPrioChanges(taskElement) {
     let id = Array.from(taskElement.children)[0].getAttribute("id");
     let index = id.match(/\d+/gm)[0];
     let tagElement = document.getElementById(`tag-${index}`);
-    let prioElement = document.getElementById(`priority-${index}`);
 
     tagElement.addEventListener('change', function() {
         console.log("changed tag");
@@ -366,10 +349,8 @@ function editName(event, index) {
     nameInput.focus();
 
     nameInput.parentElement.addEventListener('focusout', function() {
-        // let cross = "";
         if (checkbox.checked) {
             console.log("crossing out");
-            // cross = " text-decoration:line-through;"
             name.style.setProperty("text-decoration", "line-through");
         }
 
@@ -386,10 +367,8 @@ function editName(event, index) {
         parsedArrayOfTasks[index] = nameInput.value;
         uploadToLocalStorage();
 
-        // let cross = "";
         if (checkbox.checked) {
             console.log("crossing out");
-            // cross = " text-decoration:line-through"
             name.style.setProperty("text-decoration", "line-through");
         }
 
@@ -411,32 +390,21 @@ function markCompletion() {
 }
 
 function showMobileOptions (index) {
-    // let clickedTask = Array.from(document.getElementsByClassName("taskItem"))[index];
     let taskDetailsElement = document.getElementById(`task-details-${index}`);
-    // let taskActionsElement = document.getElementById(`task-details-bottom-${index}`);
     let prioDiv = document.getElementById(`priority-${index}`);
     let editSpan = document.getElementById(`edit-button-${index}`);
     let delSpan = document.getElementById(`delete-${index}`);
     let taskDetailsBottom = document.getElementById(`task-details-bottom-${index}`);
 
-    // taskActionsElement.classList.add("task-details-bottom-show");
-    // taskActionsElement.classList.remove("task-details-bottom");
-    // taskActionsElement.style.display = "flex";
-    // zamiast tego na gorze, pokazujemy priority, edit, delete buttons:
     prioDiv.style.display = "inline-block";
     editSpan.style.display = "inline-block";
     delSpan.style.display = "inline-block";
     taskDetailsBottom.classList.add("task-details-bottom-show");
 
-    // clickedTask.style.flex = "1 1 0";
-
-    // tested code:
-        // delete onMouseOver from this task element.
     taskDetailsElement.onmouseover = "";
 }
 
 function hideMobileOptions (index) {
-    // let clickedTask = Array.from(document.getElementsByClassName("taskItem"))[index];
     let taskDetailsElement = document.getElementById(`task-details-${index}`);
     let taskActionsElement = document.getElementById(`task-details-bottom-${index}`);
     let prioDiv = document.getElementById(`priority-${index}`);
@@ -445,16 +413,11 @@ function hideMobileOptions (index) {
     let taskDetailsBottom = document.getElementById(`task-details-bottom-${index}`);
 
     if (taskActionsElement) {
-        // taskActionsElement.classList.remove("task-details-bottom-show");
-        // taskActionsElement.classList.add("task-details-bottom");
-        // taskActionsElement.style.display = "none";
         prioDiv.style.display = "none";
         editSpan.style.display = "none";
         delSpan.style.display = "none";
         taskDetailsBottom.classList.remove("task-details-bottom-show");
 
-        // tested code:
-            // add onMouseOver to this task element.
         taskDetailsElement.onmouseover = `todo.showMobileOptions(${index})`;
     }
 }
