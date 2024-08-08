@@ -10,35 +10,36 @@ identifying_class: to-do-app <!-- check if its necessary-->
     <ul class="grid_2-8 todo-list" id="tasksList">
         <li class="todo-legend">
             
-            <div class="tiny-column">
-                <i class="fa-solid fa-list-check fa-xs"></i>
-            </div>
-            <div class="normal-column">
-                <span>TASK NAME</span>
-            </div>
-
-            <div class="normal-column tag-marker">
-                <i class="fa-solid fa-tags fa-sm"></i>
-                <span>TAG</span>
+            <i class="fa-solid fa-list-check fa-xs checkbox"></i>
+            
+            <div class="legend-element">
+                <span>
+                    <span>TASK NAME</span>
+                </span>
             </div>
 
-            <div class="medium-column">
+            <div class="legend-element">
+                <div class="tag-marker">
+                    <i class="fa-solid fa-tags fa-sm"></i>
+                    <span>TAG</span>
+                </div>
             </div>
 
-            <div class="medium-column">
-                <span> </span>
-            </div>
         </li>
 
         <li class="newtask">
             <form id="addTaskForm">
-                <span class="tiny-column"></span>
+                <!-- <span class="tiny-column"></span> -->
                 <input type="text" name="Input new task" id="addTask" placeholder="Add new task">
                 <input type="submit" value="Submit" class="hide">
             </form>
         </li>
     </ul>
-    
+
+
+
+
+
     <div class="grid_2-8">
         <form class="button" id="clearTasksForm">
             <input type="submit" value="Clear tasks" id="clearButton">
@@ -51,8 +52,8 @@ identifying_class: to-do-app <!-- check if its necessary-->
 
     <form class="grid_2-8" id="teeest" style="display: none">
         <input type="checkbox" name="" id="testCheckbox-1">
-        <input type="button" value="Test" id="Test">
-        <span id="lol" onclick="todo.click()">dupa w kraty</span>
+        <input type="button" value="Test" id="Test" style="height: 30px; width: 50px">
+        <span id="lol" onclick="todo.click2()">dupa w kraty</span>
         <form id="lola">
             <input type="text" name="a" id="input-0" value="dupa w kraty" style="display: none;">
         </form>
