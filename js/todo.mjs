@@ -246,7 +246,7 @@ function findNameElement(input) {
 }
 
 function ForgeTagsElement(id) {
-    let tags = ["Tag", "Work", "Sport", "Other"];
+    let tags = ["Tag", "JOB", "Sport", "Other"];
     let tagsElements = "";
     let value = null
     
