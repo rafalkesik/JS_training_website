@@ -53,14 +53,49 @@ h3 {
 .grid_2-4 {
     grid-column: 2 / 4;
 }
+.grid_2-6 {
+    grid-column: 2 / 6;
+}
+.grid_4-8 {
+    grid-column: 4 / 8;
+}
 
 /* CONTENT STYLES */
 .content-container {
     flex: 1 1 auto;
-    margin: 1em 0;
+    /* margin: 1em; */
 }
 .content-container ul {
     margin-left: 2em;
+}
+
+.main-page {
+    color: white;   
+}
+.main-page a {
+    color: salmon;
+}
+.main-page a:hover {
+    color: red;
+}
+
+.info-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0.3em;
+    margin-top: 2em;
+}
+.info-box-ul {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0.3em;
+    margin-top: 0;
+}
+
+.main-story {
+    background-image: url(/images/waves.jpg);
+    background-size:auto;
+    flex: 1 1 0;
+    padding-bottom: 3em;
+    padding-top: 1em;
 }
 
 /* HEADER STYLES */
@@ -157,6 +192,9 @@ h3 {
 /* TODO APP STYLES */
 .content-container .todo-list {
     margin-left: 0;
+}
+.app_content {
+    margin: 1em 0;
 }
 
 select[data-chosen='0'],
