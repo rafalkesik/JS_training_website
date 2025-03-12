@@ -5,14 +5,14 @@
 
 <h2>How to set it up locally?</h2>
 
-1. Download the Repo;
-2. Make sure you have Ruby installed ([_**Installation guide**_](https://jekyllrb.com/docs/installation/));
+1. Clone the Repo
+2. Make sure you have Ruby installed ([_**Installation guide**_](https://jekyllrb.com/docs/installation/))
 3. Make sure you have Jekyll installed, or install Jekyll using:
-<br><code>gem install jekyll bundler</code>;
-<br><code>bundle install</code>;
-5. Go into the Repo;
-4. Build the project locally using: <code>bundle exec jekyll serve</code>;
-5. View project in a browser using url: <code>localhost:4000</code>.
+<br><code>gem install jekyll bundler</code>
+<br><code>bundle install</code>
+5. Go into the Repo
+4. Build the project locally using: <code>bundle exec jekyll serve</code>
+5. View project in a browser using url: <code>localhost:4000</code>
 ____________________________
 6. If you want to view the site locally on mobile, buid the project using: <code>bundle exec jekyll serve --host: 0.0.0.0</code>. <br><br>To view the project on mobile, put your IP, followed by <code>:4000</code> in browser. (To view your IP, use this command in Terminal: <code>ifconfig en0 | grep "inet " | awk '{print $2}'</code>.) ex. 190.166.0.0:4000
 
