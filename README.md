@@ -1,6 +1,6 @@
 <h2>What is this site?</h2>
 <p>
-    This site is a demonstration of basic JS skills. It covers a to-do list, GitHub profiles scraper, and a calculator.
+    This site is a demonstration of basic JS skills. It covers a to-do list, and aims to add a GitHub profiles scraper, and a calculator.
 </p>
 
 <h2>How to set it up locally?</h2>
