@@ -9,7 +9,8 @@
 2. Make sure you have Ruby installed ([_**Installation guide**_](https://jekyllrb.com/docs/installation/));
 3. Make sure you have Jekyll installed, or install Jekyll using:
 <br><code>gem install jekyll bundler</code>;
-4. Go into the Repo;
+<br><code>bundle install</code>;
+5. Go into the Repo;
 4. Build the project locally using: <code>bundle exec jekyll serve</code>;
 5. View project in a browser using url: <code>localhost:4000</code>.
 ____________________________
